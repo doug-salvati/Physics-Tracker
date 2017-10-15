@@ -1,5 +1,5 @@
 # Physics Tracker
-[Honors](https://www.uml.edu/Honors/) Project at UMass Lowell
+This is my [Honors](https://www.uml.edu/Honors/) Project for UMass Lowell fall 2017 semester.
 
 ## Introduction
 
