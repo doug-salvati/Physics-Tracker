@@ -11,7 +11,7 @@ As the project is completed, this document will be updated to explain the use of
 
 ```$ python tracker.py sample_videos/projectile.mov 5 75```
 
-on a Mac machine, and clicking on the ball in the first frame.  Download the [script](https://raw.githubusercontent.com/doug-salvati/Physics-Tracker/master/tracker.py) to run on your own video.  It doesn't matter what color your subject is.  Usage:
+on a Mac machine, and clicking on the ball in the first frame.  The results are published to a video called output.mov and the data is sent to data.json.  Download the [script](https://raw.githubusercontent.com/doug-salvati/Physics-Tracker/master/tracker.py) to run on your own video.  It doesn't matter what color your subject is.  Usage:
 
 ```tracker.py [path to video] [sampling radius (px)] [tolerance (%)]```
 
