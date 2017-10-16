@@ -13,7 +13,7 @@ if len(sys.argv) != 4:
 video_path = sys.argv[1]
 sampling_radius = np.abs(int(sys.argv[2])) # px
 tolerance = float(sys.argv[3]) / 100 # percent as fraction
-if tolerance <= 0 or tolerance >= 1:
+if tolerance < 0 or tolerance > 1:
     print("Tolerance can't be " + str(tolerance * 100) + "%.")
     print("Tolerance must be between 0 and 100%.")
     quit()
@@ -54,25 +54,16 @@ cv.waitKey(1)
 cap.release()
 
 # Get color bounds
+# Average colors
 mask = np.zeros(img.shape[:2], np.uint8)
 cv.circle(mask, (selected_x, selected_y), sampling_radius, (255,255,255), -1)
 average_color = cv.mean(img, mask)
-dark = np.array(np.append([channel * (1 - tolerance) for channel in average_color[:3]], 0))
-light = np.array(np.append([(255 - channel) * (1 - tolerance) + channel for channel in average_color[:3]], 0))
-dark = np.array([[dark]], dtype=np.uint8)
-light = np.array([[light]], dtype=np.uint8)
-dark = cv.cvtColor(dark, cv.COLOR_BGR2HSV)
-light = cv.cvtColor(light, cv.COLOR_BGR2HSV)
-dark = dark[0][0]
-dark[0] -= 10
-dark[1] = dark[2] = 50
-light = light[0][0]
-light[0] += 10
-light[1] = light[2] = 255
-#dark = np.array([110,50,50])
-#light = np.array([130,255,255])
-print(dark)
-print(light)
+# Convert to HSV and get hue, we need it later
+hue = cv.cvtColor(np.array([[average_color]], dtype=np.uint8), cv.COLOR_BGR2HSV)[0][0][0]
+# All we care about is the hue, sat and val will be fixed to wide range
+sv_low = int(255 - (tolerance * 255))
+dark = np.array([hue - 10, sv_low, sv_low])
+light = np.array([hue + 10, 255, 255])
 
 # Loop over all frames
 cap = cv.VideoCapture(video_path)
@@ -97,6 +88,9 @@ for i in range(1, frames + 1):
         # Border
         _, contours, _ = cv.findContours(mask, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
         areas = map(cv.contourArea, contours)
+        if len(areas) == 0:
+            print("\nLost track of object... try raising tolerance.")
+            quit()
         contour = contours[areas.index(max(areas))]
         cv.drawContours(img, contour, -1, (0, 255, 0), 10)
 
