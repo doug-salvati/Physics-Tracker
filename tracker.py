@@ -57,8 +57,22 @@ cap.release()
 mask = np.zeros(img.shape[:2], np.uint8)
 cv.circle(mask, (selected_x, selected_y), sampling_radius, (255,255,255), -1)
 average_color = cv.mean(img, mask)
-dark = tuple([channel * (1 - tolerance) for channel in average_color[:3]]) + (0,)
-light = tuple([(255 - channel) * (1 - tolerance) + channel for channel in average_color[:3]]) + (0,)
+dark = np.array(np.append([channel * (1 - tolerance) for channel in average_color[:3]], 0))
+light = np.array(np.append([(255 - channel) * (1 - tolerance) + channel for channel in average_color[:3]], 0))
+dark = np.array([[dark]], dtype=np.uint8)
+light = np.array([[light]], dtype=np.uint8)
+dark = cv.cvtColor(dark, cv.COLOR_BGR2HSV)
+light = cv.cvtColor(light, cv.COLOR_BGR2HSV)
+dark = dark[0][0]
+dark[0] -= 10
+dark[1] = dark[2] = 50
+light = light[0][0]
+light[0] += 10
+light[1] = light[2] = 255
+#dark = np.array([110,50,50])
+#light = np.array([130,255,255])
+print(dark)
+print(light)
 
 # Loop over all frames
 cap = cv.VideoCapture(video_path)
