@@ -15,7 +15,7 @@ on a Mac machine, and clicking on the ball in the first frame.  Download the [sc
 
 ```tracker.py [path to video] [sampling radius (px)] [tolerance (%)]```
 
-where the sampling radius is how big of an area to search when detecting the object's hue and tolerance indicates which percentage of light and dark variations of the hue are accepted.
+where `sampling radius` is how big of an area to search when detecting the object's hue and `tolerance` indicates which percentage of light and dark variations of the hue are accepted.
 
 ## Introduction
 
