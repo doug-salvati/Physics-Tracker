@@ -5,6 +5,7 @@
 import cv2 as cv
 import numpy as np
 import sys
+import json
 
 # Get arguments
 if len(sys.argv) != 4:
@@ -37,6 +38,8 @@ fourcc = cv.VideoWriter_fourcc(*'avc1')
 fps = 20
 size = (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)),
         int(cap.get(cv.CAP_PROP_FRAME_HEIGHT)))
+fps = cap.get(cv.CAP_PROP_FPS)
+frames = int(cap.get(cv.CAP_PROP_FRAME_COUNT))
 out = cv.VideoWriter('output.mov', fourcc, fps, size)
 
 # Display first frame, wait for click
@@ -68,7 +71,7 @@ light = np.array([hue + 10, 255, 255])
 # Loop over all frames
 cap = cv.VideoCapture(video_path)
 i = 0
-frames = int(cap.get(cv.CAP_PROP_FRAME_COUNT))
+data = []
 
 for i in range(1, frames + 1):
     # Read a frame
@@ -106,11 +109,19 @@ for i in range(1, frames + 1):
 
         # Save frame
         out.write(img)
+        
+        # Print coordinates
+        t = i / fps
+        data_pt = {"t":t,"x":centroid_x,"y":centroid_y}
+        data.append(data_pt)
+
     else:
         print("\nError occurred processing frame " + str(i) + ". Halting...")
         break
 
-# Clean up
+# Clean up & export
 print("\nExporting...")
 cap.release()
 out.release()
+with open('data.json', 'w') as outfile:
+    json.dump(data, outfile)
