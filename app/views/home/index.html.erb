@@ -4,5 +4,10 @@
 	</head>
 	<body>
 		<h1>Welcome to the Physics Video tracker!</h1>
+		<%= form_tag "/upload", method: 'post', multipart: true, id: 'upload_form' do %>
+    			<%= file_field_tag 'file', { id: 'video' } %>
+  			<%= submit_tag("Let's Go!") %>
+		<% end %>
+
 	</body>
 </html>
