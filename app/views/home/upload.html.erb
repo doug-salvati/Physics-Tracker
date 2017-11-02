@@ -1,7 +1,21 @@
 <!DOCTYPE html>
 <html>
-	<head></head>
-	<body>
-		<h1>Uploading...</h1>
-	</body>
+  <head></head>
+  <body>
+    <h1>Analysis</h1>
+    <%= video_tag(@video, controls: true, autoplay: true, loop: true, type: "video/webm", height: "500", width: "250") %>
+    <h1>Debug Info</h1>
+    Output from OpenCV:
+    <ul>
+      <li>STDOUT: <%= @po %></li>
+      <li>STDERR: <%= @pe %></li>
+      <li>STATUS CODE: <%= @ps %></li>
+    </ul>
+    Conversion to WEBM:
+    <ul>
+      <li>STDOUT: <%= @vo %></li>
+      <li>STDERR: <%= @ve %></li>
+      <li>STATUS CODE: <%= @vs %></li>
+    </ul>
+  </body>
 </html>
