@@ -5,8 +5,8 @@
 	<body>
 		<h1>Welcome to the Physics Video tracker!</h1>
 		<h2>To begin, upload a video below.</h2>
-		<%= form_tag "/upload", method: 'post', multipart: true, id: 'upload_form' do %>
-    			<%= file_field_tag 'file', { id: 'video' } %>
+		<%= form_tag "/click", method: 'post', multipart: true do %>
+    			<%= file_field_tag 'video' %>
   			<%= submit_tag("Let's Go!") %>
 		<% end %>
 

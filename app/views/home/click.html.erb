@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <%= form_tag "/analyze", method: 'post', multipart: true, id: 'click_form' do %>
+      <div id="click-object">
+	X: <%= text_field_tag "x" %>
+	Y: <%= text_field_tag "y" %>
+      </div>
+      <div id="measure-length">
+	Length: <%= text_field_tag "length" %>
+	Units: <%= text_field_tag "units" %>
+      </div>
+      <div id="submit-area">
+	<%= hidden_field_tag "video", @video %>
+	<%= submit_tag "All Set!" %>
+      </div>
+    <% end %>
+  </body>
+</html>
