@@ -7,6 +7,12 @@
     <p>Units are <%= @units %></p>
     <%= video_tag(@output, controls: true, autoplay: true, loop: true, type: "video/webm", height: "500", width: "250") %>
     <h1>Debug Info</h1>
+    Conversion to MOV:
+    <ul>
+      <li>STDOUT: <%= @vo1 %></li>
+      <li>STDERR: <%= @ve1 %></li>
+      <li>STATUS CODE: <%= @vs1 %></li>
+    </ul>
     Output from OpenCV:
     <ul>
       <li>STDOUT: <%= @po %></li>

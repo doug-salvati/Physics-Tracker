@@ -29,7 +29,7 @@ if not cap.isOpened():
     print("Problem with input file, please check path.")
     quit()
 fourcc = (int(cap.get(cv.cv.CV_CAP_PROP_FOURCC)))
-#fourcc = cv.cv.CV_FOURCC(*'H264')
+#fourcc = cv.cv.CV_FOURCC(*'avc1')
 size = (int(cap.get(cv.cv.CV_CAP_PROP_FRAME_WIDTH)),
         int(cap.get(cv.cv.CV_CAP_PROP_FRAME_HEIGHT)))
 fps = cap.get(cv.cv.CV_CAP_PROP_FPS)

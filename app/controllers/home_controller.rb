@@ -25,13 +25,18 @@ def analyze
   ext = File.extname(path)
 
   # Names for files to be created
-  outname = File.basename(path, ext) + "-out" + ext
-  outpath = Rails.root.join('public', 'videos', outname)
+  inname = File.basename(path, ext) + ".mov"
+  inpath = Rails.root.join('tmp', 'videos', inname)
+  outname = File.basename(path, ext) + "-out" + ".mov"
+  outpath = Rails.root.join('tmp', 'videos', outname)
   @output = webm = File.basename(path, ext) + "-out" + ".webm"
   webm_path = Rails.root.join('public', 'videos', webm)
+
+  # Convert to MOV - only one I could get working easily
+  @vo1, @ve1, @vs1 = Open3.capture3("ffmpeg -i #{path} -vcodec mpeg4 -acodec aac -strict -2 #{inpath}")
   
   # Run the script
-  @po, @pe, @ps = Open3.capture3("python #{script} #{path} #{sampling_radius} #{tolerance} #{length} #{x} #{y} #{outpath}")
+  @po, @pe, @ps = Open3.capture3("python #{script} #{inpath} #{sampling_radius} #{tolerance} #{length} #{x} #{y} #{outpath}")
 
   # Convert the file to webm
   @vo, @ve, @vs = Open3.capture3("ffmpeg -i #{outpath} #{webm_path}")
