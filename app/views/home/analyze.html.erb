@@ -2,8 +2,9 @@
 <html>
   <head></head>
   <body>
+    <%= link_to "Start Over", root_path %>
     <h1>Analysis</h1>
-    <p>Units are <%= @units %>
+    <p>Units are <%= @units %></p>
     <%= video_tag(@output, controls: true, autoplay: true, loop: true, type: "video/webm", height: "500", width: "250") %>
     <h1>Debug Info</h1>
     Output from OpenCV:

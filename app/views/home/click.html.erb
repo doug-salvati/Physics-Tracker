@@ -2,19 +2,24 @@
 <html>
   <head></head>
   <body>
+    <%= link_to "Start Over", root_path %>
     <%= form_tag "/analyze", method: 'post', multipart: true, id: 'click_form' do %>
-      <div id="click-object">
-	X: <%= text_field_tag "x" %>
-	Y: <%= text_field_tag "y" %>
-      </div>
-      <div id="measure-length">
-	Length: <%= text_field_tag "length" %>
-	Units: <%= text_field_tag "units" %>
-      </div>
-      <div id="submit-area">
-	<%= hidden_field_tag "video", @video %>
-	<%= submit_tag "All Set!" %>
-      </div>
+    <h1>1. Click your object</h1>
+    <div id="click-object">
+      <%= image_tag @frame, height: 500 %>
+      X: <%= text_field_tag "x" %>
+      Y: <%= text_field_tag "y" %>
+    </div>
+    <h1>2. Make a measurement</h1>
+    <div id="measure-length">
+      <%= image_tag @frame, height: 500 %>
+      Length: <%= text_field_tag "length" %>
+      Units: <%= text_field_tag "units" %>
+    </div>
+    <div id="submit-area">
+      <%= hidden_field_tag "video", @video %>
+      <%= submit_tag "All Set!" %>
+    </div>
     <% end %>
   </body>
 </html>

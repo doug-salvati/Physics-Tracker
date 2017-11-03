@@ -7,6 +7,9 @@ end
 
 def click
   @video = params[:video].tempfile.path
+  @frame = File.basename(@video, File.extname(@video)) + ".png"
+  frame_path = Rails.root.join('public', 'images', @frame)
+  system("ffmpeg -i #{@video} -q:v 3 -vframes 1 #{frame_path}")
 end
 
 def analyze
