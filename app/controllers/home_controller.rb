@@ -31,15 +31,22 @@ def analyze
   outpath = Rails.root.join('tmp', 'videos', outname)
   @output = webm = File.basename(path, ext) + "-out" + ".webm"
   webm_path = Rails.root.join('public', 'videos', webm)
-
+  data = File.basename(path, ext) + ".json"
+  data_path = Rails.root.join('public', 'json', data)
+  @data_download = File.join('json', data)
+  
   # Convert to MOV - only one I could get working easily
   @vo1, @ve1, @vs1 = Open3.capture3("ffmpeg -i #{path} -vcodec mpeg4 -acodec aac -strict -2 #{inpath}")
   
   # Run the script
-  @po, @pe, @ps = Open3.capture3("python #{script} #{inpath} #{sampling_radius} #{tolerance} #{length} #{x} #{y} #{outpath}")
+  @po, @pe, @ps = Open3.capture3("python #{script} #{inpath} #{sampling_radius} #{tolerance} #{length} #{x} #{y} #{outpath} #{data_path}")
 
   # Convert the file to webm
   @vo, @ve, @vs = Open3.capture3("ffmpeg -i #{outpath} #{webm_path}")
+
+  # Get JSON data
+  data_str = File.open(data_path, "r").read
+  @data = JSON.parse(data_str)
 end
 
 end

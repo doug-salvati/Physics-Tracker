@@ -8,8 +8,8 @@ import sys
 import json
 
 # Get arguments
-if len(sys.argv) != 8:
-    print("Usage: tracker.py [path to video] [sampling radius (px)] [tolerance (%)] [units] [x] [y] [outfile]")
+if len(sys.argv) != 9:
+    print("Usage: tracker.py [path to video] [sampling radius (px)] [tolerance (%)] [units] [x] [y] [outfile] [datafile]")
     quit()
 video_path = sys.argv[1]
 sampling_radius = np.abs(int(sys.argv[2])) # px
@@ -22,6 +22,7 @@ if tolerance < 0 or tolerance > 1:
 selected_x = int(sys.argv[5])
 selected_y = int(sys.argv[6])
 outpath = sys.argv[7]
+datapath = sys.argv[8]
 
 # Read the video
 cap = cv.VideoCapture(video_path)
@@ -97,9 +98,9 @@ for i in range(1, frames + 1):
         
         # Print coordinates
         t = i / fps
-        trans_x = x / units;
+        trans_x = centroid_x / float(units)
         ymax, _ = img.shape[:2]
-        trans_y = (ymax - y) / units;
+        trans_y = (ymax - centroid_y) / float(units)
         data_pt = {"t":t,"x":trans_x,"y":trans_y}
         data.append(data_pt)
 
@@ -111,5 +112,5 @@ for i in range(1, frames + 1):
 print("\nExporting...")
 cap.release()
 out.release()
-#with open('data.json', 'w') as outfile:
-#    json.dump(data, outfile)
+with open(datapath, 'w') as outfile:
+    json.dump(data, outfile)

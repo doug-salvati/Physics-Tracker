@@ -5,7 +5,27 @@
     <%= link_to "Start Over", root_path %>
     <h1>Analysis</h1>
     <p>Units are <%= @units %></p>
-    <%= video_tag(@output, controls: true, autoplay: true, loop: true, type: "video/webm", height: "500", width: "250") %><br/>
+    <%= video_tag(@output, controls: true, autoplay: true, loop: true, type: "video/webm", height: "500", width: "250") %>
+
+    <h1>Data</h1>
+    <a href="<%= @data_download %>" download="physics_data.json">Download</a>
+    <table>
+      <thead>
+	  <th>Time</th>
+	  <th>X</th>
+	  <th>Y</th>
+      </thead>
+      <tbody>
+	<% @data.each do |datum| %>
+	<tr>
+	  <td><%= datum["t"] %></td>
+	  <td><%= datum["x"] %></td>
+	  <td><%= datum["y"] %></td>
+	</tr>
+	<% end %>
+      </tbody>
+    </table>
+      
     <button id="toggledebug">Debug Info</button>
     <div id="debug" style="display: none;">
       <h1>Debug Info</h1>

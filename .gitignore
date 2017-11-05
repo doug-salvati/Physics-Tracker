@@ -54,5 +54,6 @@ bower.json
 .byebug_history
 
 # App ##################################
-/public/videos
-/public/images
+/public/videos/*
+/public/images/*
+/public/json/*
