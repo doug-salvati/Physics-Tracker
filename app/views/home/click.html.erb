@@ -12,8 +12,8 @@
     </div>
     <h1>2. Make a measurement</h1>
     <div id="measure-length">
-      <%= image_tag @frame %><br/>
-      Length: <%= text_field_tag "length" %>
+      <%= image_tag @frame, id: "measure-object-img" %><br/>
+      <%= hidden_field_tag "length", "1" %>
       Units: <%= text_field_tag "units" %>
     </div>
     <div id="submit-area">
