@@ -22,6 +22,7 @@ $(document).ready ->
                 if x1 is -1
                         x1 = Math.round(e.pageX - $(this).offset().left)
                         y1 = Math.round(e.pageY - $(this).offset().top)
+                        $("#measure-length-next").hide();
                 # Case 2: Selecting 2nd point (need to calc dist)
                 else
                         x2 = Math.round(e.pageX - $(this).offset().left)
@@ -30,6 +31,8 @@ $(document).ready ->
                         y_term = Math.pow(y2 - y1, 2)
                         x1 = y1 = x2 = y2 = -1
                         dist = Math.sqrt(x_term + y_term)
+                        if dist is 0
+                                dist = 1
                         $("input[name=length").val(Math.round(dist))
                         $("#measure-length-next").show();
         $('input[name=video]').change (e) ->

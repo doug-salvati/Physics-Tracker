@@ -2,51 +2,25 @@
 <html>
   <head></head>
   <body>
-    <%= link_to "Start Over", root_path %>
-    <h1>Analysis</h1>
-    <p>Units are <%= @units %></p>
-    <%= video_tag(@output, controls: true, autoplay: true, loop: true, type: "video/webm", height: "500", width: "250") %>
-
-    <h1>Data</h1>
-    <a href="<%= @data_download %>" download="physics_data.json">Download</a>
-    <table>
-      <thead>
-	  <th>Time</th>
-	  <th>X</th>
-	  <th>Y</th>
-      </thead>
-      <tbody>
-	<% @data.each do |datum| %>
-	<tr>
-	  <td><%= datum["t"] %></td>
-	  <td><%= datum["x"] %></td>
-	  <td><%= datum["y"] %></td>
-	</tr>
-	<% end %>
-      </tbody>
-    </table>
-      
-    <button id="toggledebug">Debug Info</button>
-    <div id="debug" style="display: none;">
-      <h1>Debug Info</h1>
-      Conversion to MOV:
-      <ul>
-	<li>STDOUT: <%= @vo1 %></li>
-	<li>STDERR: <%= @ve1 %></li>
-	<li>STATUS CODE: <%= @vs1 %></li>
-      </ul>
-      Output from OpenCV:
-      <ul>
-	<li>STDOUT: <%= @po %></li>
-	<li>STDERR: <%= @pe %></li>
-	<li>STATUS CODE: <%= @ps %></li>
-      </ul>
-      Conversion to WEBM:
-      <ul>
-	<li>STDOUT: <%= @vo %></li>
-	<li>STDERR: <%= @ve %></li>
-	<li>STATUS CODE: <%= @vs %></li>
-      </ul>
+    <div class="column center">
+      <h1>Video Analysis</h1>
+      <%= video_tag(@output, controls: true, autoplay: true, loop: true, type: "video/webm", width: "50%") %>
+    </div>
+    <div class="column center">
+      <h1>Data</h1>
+      <a class="download_btn" href="<%= @data_download %>" download="physics_data.json"><i class="fa fa-download" aria-hidden="true"></i></a>
+      <table><thead><th>Time (s)</th><th>X (<%= @units %>)</th><th>Y (<%= @units %>)</th></thead></table>
+      <div class="table-container"><table>
+	<tbody>
+	  <% @data.each do |datum| %>
+	  <tr>
+	    <td><%= datum["t"].to_f.round(4) %></td>
+	    <td><%= datum["x"].to_f.round(4) %></td>
+	    <td><%= datum["y"].to_f.round(4) %></td>
+	  </tr>
+	  <% end %>
+	</tbody>
+      </table></div>
     </div>
   </body>
 </html>
