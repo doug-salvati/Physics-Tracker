@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>PhysicsTracker</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <title>Physics Tracker</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+  <div class="navbar">
+    <h1 id="page_title">Physics Tracker</h1>
+    <%= link_to '<i class="fa fa-info-circle" aria-hidden="true"></i> About'.html_safe, '/about', id: 'about' %>
+  </div>
+  
 <%= yield %>
 
 </body>

@@ -1,3 +1,70 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+// General
+body {
+     background-image: url('background.png');
+     margin: 0;
+     font-family: sans-serif;
+     color: white;
+}
+
+a {
+     color: inherit;
+}
+
+a:hover {
+     text-decoration: none;
+}
+
+.center {
+     text-align: center;
+}
+
+.yellow_button {
+     cursor: pointer;
+     text-decoration: none;
+     color: white;
+     background-color: rgb(244, 158, 66);
+     padding: 10px;
+     border-radius: 5px;
+}
+.yellow_button:hover {
+     background-color: rgb(242, 130, 12);
+}
+
+#next {
+     background: Transparent;
+     border: none;
+     font-size: 200%;
+     cursor: pointer;
+     color: rgba(255,255,255,0.75);
+     display: none;
+}
+.next:hover {
+     color: rgba(255,255,255,1);
+}
+
+// Navigation bar
+.navbar {
+    background-color: rgba(255,255,255,0.75);
+    top: 0;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    width: 100%;
+}
+
+.navbar > * {
+    display: inline;
+    color: black;
+}
+
+#page_title {
+    margin-left: 10%;
+}
+
+#about {
+    position: absolute;
+    right: 10%;
+}

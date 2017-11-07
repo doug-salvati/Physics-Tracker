@@ -26,3 +26,8 @@ $(document).ready ->
                         x1 = y1 = x2 = y2 = -1
                         dist = Math.sqrt(x_term + y_term)
                         $("input[name=length").val(Math.round(dist))
+        $('input[name=video]').change (e) ->
+                if e.target.files.length
+                        $("#next").show()
+                else
+                        $("#next").hide()
