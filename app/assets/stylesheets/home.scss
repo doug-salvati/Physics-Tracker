@@ -34,16 +34,61 @@ a:hover {
      background-color: rgb(242, 130, 12);
 }
 
-#next {
+.next {
      background: Transparent;
      border: none;
+     line-height: 200%;
      font-size: 200%;
+     vertical-align: middle;
      cursor: pointer;
      color: rgba(255,255,255,0.75);
      display: none;
 }
 .next:hover {
      color: rgba(255,255,255,1);
+}
+.right-next {
+    display: none;
+    position: fixed;
+    right: 20px;
+    top: 50%;
+}
+
+// Loading screen
+#loading-screen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+}
+
+// Following code courtesy W3Schools
+.loader {
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  width: 10%;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 // Navigation bar
@@ -67,4 +112,17 @@ a:hover {
 #about {
     position: absolute;
     right: 10%;
+}
+
+// Object selection
+#click-object > img {
+    cursor: crosshair;
+}
+
+#measure-length {
+    display: none;
+}
+
+#submit-area {
+    display: none;
 }

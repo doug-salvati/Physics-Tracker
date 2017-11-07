@@ -7,7 +7,7 @@
 		<p class="center"><i>To begin, upload a video below.</i></p>
 		<%= form_tag "/click", method: 'post', multipart: true, class: 'center' do %>
     			<%= file_field_tag 'video', class: 'yellow_button' %>
-  			<%= button_tag(type: "submit", id: "next") do %>
+  			<%= button_tag(type: "submit", id: "upload-next", class: "next") do %>
 			    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
 			<% end %>
 		<% end %>
