@@ -24,7 +24,8 @@
 	  <option value="ft">Foot</option>
 	  <option value="yd">Yard</option>
 	</select></p>
-      <%= image_tag @frame, id: "measure-object-img" %><br/>
+      <%= image_tag @frame, id: "measure-length-img" %>
+      <canvas id="measure-length-canvas"></canvas>
       <%= hidden_field_tag "length", "1" %>
       <%= hidden_field_tag "video", @video %>
       <%= button_tag(type: "submit", id: "measure-length-next", class: "next right-next") do %>

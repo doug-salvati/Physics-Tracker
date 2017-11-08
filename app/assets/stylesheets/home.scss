@@ -150,7 +150,12 @@ table {
 #click-object > img {
     cursor: crosshair;
 }
-#measure-length > img {
+
+#measure-length-img {
+    display: none;
+}
+
+#measure-length-canvas {
     cursor: crosshair;
 }
 
