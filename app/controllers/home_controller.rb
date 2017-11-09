@@ -14,7 +14,7 @@ end
 
 def analyze
   # Get all necessary params
-  script = Rails.root.join('lib', 'assets', 'tracker_web.py')
+  script = Rails.root.join('lib', 'assets', 'py', 'tracker_web.py')
   path = params[:video]
   sampling_radius = 10
   tolerance = 75

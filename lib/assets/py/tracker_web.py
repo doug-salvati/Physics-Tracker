@@ -63,11 +63,7 @@ for i in range(1, frames + 1):
     # Read a frame
     ret, img = cap.read()
     if ret == True:
-        # Print progress
-        progress = int(float(i) / float(frames) * 100)
-        sys.stdout.write("\rProcessing frame " + str(i) + "/" + str(frames) + " (" + str(progress) +  "%)")
-        sys.stdout.flush()
-
+        
         # Convert to HSV color
         hsv = cv.cvtColor(img, cv.COLOR_BGR2HSV)
             
@@ -108,9 +104,23 @@ for i in range(1, frames + 1):
         print("\nError occurred processing frame " + str(i) + ". Halting...")
         break
 
-# Clean up & export
-print("\nExporting...")
+# Clean up & export video
 cap.release()
 out.release()
+
+# Calculate v, a, and export data
+for i, data_pt in enumerate(data):
+    if i > 0:
+        delta_t = data_pt["t"] - data[i - 1]["t"]
+        data_pt["vx"] = (data_pt["x"] - data[i - 1]["x"]) / delta_t
+        data_pt["vy"] = (data_pt["y"] - data[i - 1]["y"]) / delta_t
+    else:
+        data_pt["vx"] = data_pt["vy"] = 0
+    if i > 1:
+        data_pt["ax"] = (data_pt["vx"] - data[i - 1]["vx"]) / delta_t
+        data_pt["ay"] = (data_pt["vy"] - data[i - 1]["vy"]) / delta_t
+    else:
+        data_pt["ax"] = data_pt["ay"] = 0
+        
 with open(datapath, 'w') as outfile:
     json.dump(data, outfile)

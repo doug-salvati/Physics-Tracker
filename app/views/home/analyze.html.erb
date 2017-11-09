@@ -9,7 +9,14 @@
     <div class="column center">
       <h1>Data</h1>
       <a class="download_btn" href="<%= @data_download %>" download="physics_data.json"><i class="fa fa-download" aria-hidden="true"></i></a>
-      <table><thead><th>Time (s)</th><th>X (<%= @units %>)</th><th>Y (<%= @units %>)</th></thead></table>
+      <div class="table-head-container">
+      <table id="data-table"><thead>
+	  <th>Time (s)</th><th><i>x</i> (<%= @units %>)</th><th><i>y</i> (<%= @units %>)</th>
+	  <th><i>v<sub>x</sub></i> (<%= @units %>/s)</th><th><i>v<sub>y</sub></i> (<%= @units %>/s)</th>
+	  <th><i>a<sub>x</sub></i> (<%= @units %>/s<sup>2</sup>)</th>
+	  <th><i>a<sub>y</sub></i> (<%= @units %>/s<sup>2</sup>)</th>
+      </thead></table>
+      </div>
       <div class="table-container"><table>
 	<tbody>
 	  <% @data.each do |datum| %>
@@ -17,6 +24,10 @@
 	    <td><%= datum["t"].to_f.round(4) %></td>
 	    <td><%= datum["x"].to_f.round(4) %></td>
 	    <td><%= datum["y"].to_f.round(4) %></td>
+	    <td><%= datum["vx"].to_f.round(4) %></td>
+	    <td><%= datum["vy"].to_f.round(4) %></td>
+	    <td><%= datum["ax"].to_f.round(4) %></td>
+	    <td><%= datum["ay"].to_f.round(4) %></td>
 	  </tr>
 	  <% end %>
 	</tbody>
