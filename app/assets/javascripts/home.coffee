@@ -1,6 +1,3 @@
-# Step 1
-# Click a selection on the image
-
 # Coordinates of measurement
 x1 = y1 = x2 = y2 = -1
 
@@ -94,13 +91,14 @@ $(document).ready ->
                         fids[idx] = field.id.toString()
                 # Format data for iSENSE
                 data = {}
-                data[fids[0]] = [0]
-                data[fids[1]] = [1]
-                data[fids[2]] = [2]
-                data[fids[3]] = [3]
-                data[fids[4]] = [4]
-                data[fids[5]] = [5]
-                data[fids[6]] = [6]
+                data[fids[0]] = $('#data-table td:nth-child(1)').map(() -> return $(this).text()).get()
+                data[fids[1]] = $('#data-table td:nth-child(2)').map(() -> return $(this).text()).get()
+                data[fids[2]] = $('#data-table td:nth-child(3)').map(() -> return $(this).text()).get()
+                data[fids[3]] = $('#data-table td:nth-child(4)').map(() -> return $(this).text()).get()
+                data[fids[4]] = $('#data-table td:nth-child(5)').map(() -> return $(this).text()).get()
+                data[fids[5]] = $('#data-table td:nth-child(6)').map(() -> return $(this).text()).get()
+                data[fids[6]] = $('#data-table td:nth-child(7)').map(() -> return $(this).text()).get()
+                console.log data
                 # Perform the upload
                 apiUrl = 'https://isenseproject.org/api/v1/projects/' + project + '/jsonDataUpload'
                 upload = {

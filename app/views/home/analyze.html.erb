@@ -11,14 +11,14 @@
       <a class="download_btn" href="<%= @data_download %>" download="physics_data.json"><i class="fa fa-download" aria-hidden="true"></i></a>
       <a class="download_btn" id="upload-to-isense"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
       <div class="table-head-container">
-      <table id="data-table"><thead>
+      <table><thead>
 	  <th>Time (s)</th><th><i>x</i> (<%= @units %>)</th><th><i>y</i> (<%= @units %>)</th>
 	  <th><i>v<sub>x</sub></i> (<%= @units %>/s)</th><th><i>v<sub>y</sub></i> (<%= @units %>/s)</th>
 	  <th><i>a<sub>x</sub></i> (<%= @units %>/s<sup>2</sup>)</th>
 	  <th><i>a<sub>y</sub></i> (<%= @units %>/s<sup>2</sup>)</th>
       </thead></table>
       </div>
-      <div class="table-container"><table>
+      <div class="table-container"><table id="data-table">
 	<tbody>
 	  <% @data.each do |datum| %>
 	  <tr>
@@ -37,7 +37,6 @@
     <!-- iSENSE Upload Form -->
     <div id="isense-form">
       <h1 class="center">Upload to iSENSE!</h1>
-      In development, using fake data...<br/>
       Project ID: <input type="text" value="" id="isense-pid"><br/>
       Contributor Key: <input type="text" value="" id="isense-key"><br/>
       Data Set Name: <input type="text" value="" id="isense-dset"><br/>
