@@ -61,8 +61,11 @@ a:hover {
 }
 
 .download_btn {
+    cursor: pointer;
     font-size: 400%;
     color: rgba(255,255,255,0.75);
+    margin-left: 20px;
+    margin-right: 20px;
     :hover {
         color: white;
     }
@@ -170,4 +173,20 @@ table {
 
 #submit-area {
     display: none;
+}
+
+// Upload to iSENSE
+#isense-form {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    background-color: rgba(255,255,255,0.90);
+    border-radius: 5px;
+    color: black;
+    margin: 1%;
+    input {
+    	  padding: 2px;
+    }
 }

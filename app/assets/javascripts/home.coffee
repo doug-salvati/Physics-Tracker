@@ -60,7 +60,6 @@ $(document).ready ->
                 $("#measure-length-canvas").mousemove (e) ->
                         if (x1 isnt -1) and (x2 is -1)
                                 drawLine(x1,y1,e.pageX - $(this).offset().left, e.pageY - $(this).offset().top)
-                        
         $('input[name=video]').change (e) ->
                 if e.target.files.length
                         $("#upload-next").show()
@@ -68,3 +67,46 @@ $(document).ready ->
                         $("#upload-next").hide()
         $("#measure-length-next").click (e) ->
                 $('#loading-screen').show()
+        $("#upload-to-isense").click (e) ->
+                $("#isense-form").show()
+        $("#isense-cancel").click (e) ->
+                $("#isense-form").hide()
+        $("#isense-submit").click (e) ->
+                $("#isense-form").hide()
+                for elt in $('input')
+                        if !elt.value
+                                alert "Not everything filled out!"
+                                return
+                # Get key information
+                project = $("#isense-pid").val()
+                key = $("#isense-key").val()
+                title = $("#isense-dset").val()
+                name = $("#isense-name").val()
+                # Field matching
+                field_matching = [$("#t").val(), $("#x").val(), $("#y").val(), $("#vx").val(), $("#vy").val(), $("#ax").val(), $("#ay").val()]
+                urlProject = 'http://isenseproject.org/api/v1/projects/' + project
+                responseProject = $.ajax({ type: "GET", url: urlProject, async: false, dataType: "JSON"}).responseText
+                fields = JSON.parse(responseProject).fields
+                fids = {}
+                for field in fields
+                        name = field.name
+                        idx = field_matching.indexOf(name)
+                        fids[idx] = field.id.toString()
+                # Format data for iSENSE
+                data = {}
+                data[fids[0]] = [0]
+                data[fids[1]] = [1]
+                data[fids[2]] = [2]
+                data[fids[3]] = [3]
+                data[fids[4]] = [4]
+                data[fids[5]] = [5]
+                data[fids[6]] = [6]
+                # Perform the upload
+                apiUrl = 'https://isenseproject.org/api/v1/projects/' + project + '/jsonDataUpload'
+                upload = {
+                        'title': title,
+                        'contribution_key': key,
+                        'contributor_name': name,
+                        'data': data
+                }
+                $.post(apiUrl, upload, () -> alert "Sweet, it worked!").error(() -> alert "It failed... please check your details, they must be exact!")
