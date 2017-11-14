@@ -3,14 +3,22 @@
 	<head>
 	</head>
 	<body>
+   	        <% if flash[:error] %> <div class="flash-error"><%= flash[:error].html_safe %></div><% end %>
 	        <h1 class="center">1</h1>
-		<p class="center"><i>To begin, upload a video below.</i></p>
+		<p class="center"><i>To begin, upload a video below.</i></p>	
 		<%= form_tag "/click", method: 'post', multipart: true, class: 'center' do %>
     			<%= file_field_tag 'video', class: 'yellow_button' %>
   			<%= button_tag(type: "submit", id: "upload-next", class: "next") do %>
 			    <i class="fa fa-arrow-circle-right" aria-hidden="true"></i>
 			<% end %>
 		<% end %>
-
+		<hr/>
+		<h3 class="center">Tips</h3>
+		<ol class="center" style="list-style-position: inside;">
+		  <li>Use a uniformly-colored object.</li>
+		  <li>Be sure the object doesn't blend in with the background</li>
+		  <li>Make sure the object is in the frame all the time</li>
+		  <li>If you have trouble distinguishing your object in the video, odds are the computer will too</li>
+		</ol>
 	</body>
 </html>

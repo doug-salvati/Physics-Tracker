@@ -9,10 +9,18 @@ def click
   @video = params[:video].tempfile.path
   @frame = File.basename(@video, File.extname(@video)) + ".png"
   frame_path = Rails.root.join('public', 'images', @frame)
-  system("ffmpeg -i #{@video} -q:v 3 -vframes 1 #{frame_path}")
+  @o, @e, @s = Open3.capture3("ffmpeg -i #{@video} -q:v 3 -vframes 1 #{frame_path}")
+  logger.info(@o)
+  logger.info(@e)
+  logger.info(@s)
+  if @s.exitstatus != 0
+    redirect_to(root_path, {:flash => {:error => "Your file is not in a supported format.  Try:<ul><li>Make sure you are using a VIDEO file</li><li>Convert to a different format on the web</li></ul>"}})
+  end
 end
 
 def analyze
+  @error = 'none'
+
   # Get all necessary params
   script = Rails.root.join('lib', 'assets', 'py', 'tracker_web.py')
   path = params[:video]
@@ -37,14 +45,24 @@ def analyze
   
   # Convert to MOV - only one I could get working easily
   @vo1, @ve1, @vs1 = Open3.capture3("ffmpeg -i #{path} -vcodec mpeg4 -acodec aac -strict -2 #{inpath}")
-  
-  # Run the script
+  if @vs1.exitstatus != 0
+        redirect_to(root_path, {:flash => {:error => "Failed to convert video for processing. Try:<ul><li>Make sure you are using a proper video file</li><li>Convert to a different format</li></ul>"}})
+  end
+
+  # Run Python script!
   @po, @pe, @ps = Open3.capture3("python #{script} #{inpath} #{sampling_radius} #{tolerance} #{length} #{x} #{y} #{outpath} #{data_path}")
+  if @ps.exitstatus != 0
+    redirect_to(root_path, {:flash => {:error => "Failed during tracking with the following issues:<br/>" + @po}})
+    return
+  end
 
   # Convert the file to webm
   @vo, @ve, @vs = Open3.capture3("ffmpeg -i #{outpath} #{webm_path}")
-
+  if @vs.exitstatus != 0
+    flash[:error] = "Unable to show the result video in the browser at this time.<br/>Sorry about that :/"
+  end
   # Get JSON data
+  
   data_str = File.open(data_path, "r").read
   @data = JSON.parse(data_str)
 end

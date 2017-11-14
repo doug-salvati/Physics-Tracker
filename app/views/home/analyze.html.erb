@@ -2,6 +2,7 @@
 <html>
   <head></head>
   <body>
+    <% if flash[:error] %> <div class="flash-error"><%= flash[:error].html_safe %></div><% end %>
     <div class="column center">
       <h1>Video Analysis</h1>
       <%= video_tag(@output, controls: true, autoplay: true, loop: true, type: "video/webm", width: "50%") %>

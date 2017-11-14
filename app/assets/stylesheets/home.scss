@@ -28,6 +28,14 @@ a:hover {
      width: 50%;
 }
 
+.flash-error {
+     margin: 5%;
+     background-color: rgba(255,0,0,0.75);
+     padding: 10px;
+     color: white;
+     border-radius: 10px;
+}
+
 .yellow_button {
      cursor: pointer;
      text-decoration: none;
@@ -149,7 +157,7 @@ table {
     margin-left: 10%;
 }
 
-#about {
+.about {
     position: absolute;
     right: 10%;
 }
