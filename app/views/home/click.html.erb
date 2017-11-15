@@ -2,6 +2,7 @@
 <html>
   <head></head>
   <body>
+    <% if flash[:error] %> <div class="flash-error"><%= flash[:error].html_safe %></div><% end %>
     <%= form_tag "/analyze", method: 'post', multipart: true, id: 'click_form' do %> 
     <div id="click-object" class="center">
       <h1>2</h2>

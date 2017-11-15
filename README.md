@@ -1,7 +1,7 @@
 # Physics Tracker
 This is my [Honors](https://www.uml.edu/Honors/) Project for UMass Lowell fall 2017 semester.
 
-Below is the proposal for this project.
+Below is the proposal for this project.  Updates will be added during development, and this document will be reworked when it is finished.
 
 ## Updates
 
@@ -16,6 +16,10 @@ on a Mac machine, and clicking on the ball in the first frame.  The results are 
 ```tracker.py [path to video] [sampling radius (px)] [tolerance (%)]```
 
 where `sampling radius` is how big of an area to search when detecting the object's hue and `tolerance` indicates which percentage of light and dark variations of the hue are accepted.
+
+**November 7**: The application has been successfully ported to the web with more functionality than ever.  It offers the ability to click and then measure the object to get a units calculation right in the browser, then it performs the upload and shows the values, as well as calculated velocity and acceleration in a table.  More features are planned for later in the lifecycle of this project.
+
+You can even upload to an [iSENSE](https://isenseproject.org/) project!  Checkout my results from using this process [here](https://isenseproject.org/projects/3304).  The site is *currently* only available at [bit.ly/physics-tracker](bit.ly/physics-tracker) for **UML IP Addresses Only**.
 
 ## Introduction
 
