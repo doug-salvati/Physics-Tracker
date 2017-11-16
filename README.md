@@ -21,6 +21,20 @@ where `sampling radius` is how big of an area to search when detecting the objec
 
 You can even upload to an [iSENSE](https://isenseproject.org/) project!  Checkout my results from using this process [here](https://isenseproject.org/projects/3304).  The site is available at [bit.ly/physics-track](bit.ly/physics-track).
 
+## Installation
+If installing this app on your own server, please install the following dependencies. I have tested on Ubuntu 16.04 machines.
+```
+sudo apt update
+sudo apt install rails
+sudo apt install python
+sudo apt install libopencv-dev python-opencv
+Sudo apt install ffmpeg
+sudo apt install x264
+bundle install
+rails server
+```
+# The Original Proposal
+
 ## Introduction
 
 This project will produce a piece of software used to analyze two-dimensional motion of objects.  Friendly to students young and old, the software will consist of an interface allowing the user to upload or record a video and then identify an object in the video.  From there, computer vision will be used to track the object’s motion throughout the video.  The user will then be able to view the position, velocity, and acceleration of the object with respect to time, automatically calculated for them and placed in a table.  They will also be able to watch the video again, frame-by-frame, showing the data values at any particular time.  As a final step, the data can be uploaded to iSENSE, a web page used for storing and visualizing data.  This will enable students to effortlessly graph the data after they collect it.
