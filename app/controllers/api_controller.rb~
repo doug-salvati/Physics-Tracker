@@ -1,0 +1,10 @@
+class ApiController < ApplicationController
+  skip_before_action :verify_authenticity_token
+  
+  def upload
+    logger.info(request.url)
+    logger.info(request.headers)
+    msg = { :msg => "hello world" }
+    render :json => msg
+  end
+end

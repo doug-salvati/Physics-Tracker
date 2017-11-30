@@ -50,7 +50,7 @@ $(document).ready ->
                         dist = Math.sqrt(x_term + y_term)
                         if dist is 0
                                 dist = 1
-                        $("input[name=length").val(Math.round(dist))
+                        $("input[name=length]").val(Math.round(dist))
                         drawLine(x1,y1,x2,y2)
                         x1 = y1 = x2 = y2 = -1
                         $("#measure-length-next").show()
