@@ -57,4 +57,4 @@ bower.json
 # App ##################################
 /public/videos/*
 /public/images/*
-/public/json/*
+/public/json/*.json
