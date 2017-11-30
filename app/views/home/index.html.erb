@@ -5,7 +5,7 @@
 	<body>
    	        <% if flash[:error] %> <div class="flash-error"><%= flash[:error].html_safe %></div><% end %>
 	        <h1 class="center">1</h1>
-		<p class="center"><i>To begin, upload a video below.</i></p>	
+		<p class="center"><em>Hey there, upload a video below.<br/>Then press <i class="fa fa-arrow-circle-right" aria-hidden="true"></i> and we'll get started!</em></p>	
 		<%= form_tag "/click", method: 'post', multipart: true, class: 'center' do %>
     			<%= file_field_tag 'video', class: 'yellow_button' %>
   			<%= button_tag(type: "submit", id: "upload-next", class: "next") do %>
