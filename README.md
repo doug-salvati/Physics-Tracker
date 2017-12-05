@@ -19,7 +19,7 @@ where `sampling radius` is how big of an area to search when detecting the objec
 
 **November 7**: The application has been successfully ported to the web with more functionality than ever.  It offers the ability to click and then measure the object to get a units calculation right in the browser, then it performs the upload and shows the values, as well as calculated velocity and acceleration in a table.  More features are planned for later in the lifecycle of this project.
 
-You can even upload to an [iSENSE](https://isenseproject.org/) project!  Checkout the results from various people using this process [here](https://isenseproject.org/projects/3304).  The site is available at [https://bit.ly/physics-track](bit.ly/physics-track).
+You can even upload to an [iSENSE](https://isenseproject.org/) project!  Checkout the results from various people using this process [here](https://isenseproject.org/projects/3304).  The site is available at [bit.ly/physics-track](https://bit.ly/physics-track).
 
 **December 4**: Some enhancements have been made over the past several weeks based on feedback recieved from teachers.  These include clearer instructions, bigger buttons, click-and-drag to measure, and upload to the communal iSENSE project easily.
 
