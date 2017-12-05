@@ -9,8 +9,10 @@
     </div>
     <div class="column center">
       <h1>Data</h1>
-      <a class="download_btn" href="<%= @data_download %>" download="physics_data.json"><i class="fa fa-download" aria-hidden="true"></i></a>
-      <a class="download_btn" id="upload-to-isense"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
+      <div id="export_btns">
+      <a class="download_btn" href="<%= @data_download %>" download="physics_data.json"><i class="fa fa-download fa-2x" aria-hidden="true"></i> Download Data</a>
+      <a class="download_btn" id="upload-to-isense"><i class="fa fa-line-chart fa-2x" aria-hidden="true"></i> Upload to iSENSE</a>
+      </div>
       <div class="table-head-container">
       <table><thead>
 	  <th>Time (s)</th><th><i>x</i> (<%= @units %>)</th><th><i>y</i> (<%= @units %>)</th>
