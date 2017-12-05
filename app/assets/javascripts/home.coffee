@@ -1,6 +1,9 @@
 # Coordinates of measurement
 x1 = y1 = x2 = y2 = -1
 
+iSENSESuccess = (pid) ->
+        window.open('https://isenseproject.org/projects/' + pid, '_blank');
+
 drawLine = (x1,y1,x2,y2) ->
         img = new Image()
         img.src = document.getElementById('measure-length-img').src
@@ -19,68 +22,78 @@ drawLine = (x1,y1,x2,y2) ->
                 ctx.stroke()
 
 $(document).ready ->
-        $("#toggledebug").click (e) ->
-                $("#debug").toggle()
-        $("#click-object-img").click (e) ->
+	$("#click-object-img").click (e) ->
                 x = Math.round(e.pageX - $(this).offset().left)
                 y = Math.round(e.pageY - $(this).offset().top)
                 $("input[name=x]").val(x)
                 $("input[name=y]").val(y)
                 $("#click-object-next").show()
-        $("#click-object-next").click (e) ->
+	$("#click-object-next").click (e) ->
                 $("#click-object").hide()
                 $("#measure-length").show()
                 document.body.scrollTop = document.documentElement.scrollTop = 0
-        if $("#measure-length-img").length
+	$("#measure-length-canvas").mousemove (e) ->
+                 if (x1 isnt -1) and (x2 is -1)
+                         drawLine(x1,y1,e.pageX - $(this).offset().left, e.pageY - $(this).offset().top)
+	$("#measure-length-canvas").mousedown (e) ->
+                #  Selecting 1st point
+                click_x = e.pageX
+                click_y = e.pageY
+                x1 = Math.round(click_x - $(this).offset().left)
+                y1 = Math.round(click_y - $(this).offset().top)
+                $("#measure-length-next").hide();
+	if $("#measure-length-img").length
+	        drawLine(x1,y1,x2,y2)
+	$("#measure-length-canvas").mouseup (e) ->
+                # Selecting 2nd point (need to calc dist)
+		x2 = Math.round(e.pageX - $(this).offset().left)
+		y2 = Math.round(e.pageY - $(this).offset().top)
+		if (x1 == x2) and (y1 == y2)
+		   drawLine(x1,y1,x2,y2)
+		   x1 = x2 = y1 = y2 = -1
+		   return
+		x_term = Math.pow(x2 - x1, 2)
+		y_term = Math.pow(y2 - y1, 2)
+		dist = Math.sqrt(x_term + y_term)
+		if dist is 0
+                        dist = 1
+                $("input[name=length]").val(Math.round(dist))
                 drawLine(x1,y1,x2,y2)
-        $("#measure-length-canvas").click (e) ->
-                # Case 1: Selecting 1st point
-                if x1 is -1
-                        click_x = e.pageX
-                        click_y = e.pageY
-                        x1 = Math.round(click_x - $(this).offset().left)
-                        y1 = Math.round(click_y - $(this).offset().top)
-                        $("#measure-length-next").hide();
-                # Case 2: Selecting 2nd point (need to calc dist)
-                else
-                        x2 = Math.round(e.pageX - $(this).offset().left)
-                        y2 = Math.round(e.pageY - $(this).offset().top)
-                        x_term = Math.pow(x2 - x1, 2)
-                        y_term = Math.pow(y2 - y1, 2)
-                        dist = Math.sqrt(x_term + y_term)
-                        if dist is 0
-                                dist = 1
-                        $("input[name=length]").val(Math.round(dist))
-                        drawLine(x1,y1,x2,y2)
-                        x1 = y1 = x2 = y2 = -1
-                        $("#measure-length-next").show()
-                $("#measure-length-canvas").mousemove (e) ->
-                        if (x1 isnt -1) and (x2 is -1)
-                                drawLine(x1,y1,e.pageX - $(this).offset().left, e.pageY - $(this).offset().top)
-        $('input[name=video]').change (e) ->
-                if e.target.files.length
-                        $("#upload-next").show()
-                else
-                        $("#upload-next").hide()
-        $("#measure-length-next").click (e) ->
-                $('#loading-screen').show()
-        $("#upload-to-isense").click (e) ->
+                x1 = y1 = x2 = y2 = -1
+                $("#measure-length-next").show()
+	$('input[name=video]').change (e) ->
+		if e.target.files.length
+		        $("#upload-next").show()
+		else
+		        $("#upload-next").hide()
+	$("#measure-length-next").click (e) ->
+		$('#loading-screen').show()
+	$("#upload-to-isense").click (e) ->
                 $("#isense-form").show()
+        $("#isense-use-custom").click (e) ->
+                $("#isense-dset-2").val(""); $("#isense-name-2").val("") 
+                $("#isense-default").hide()
+                $("#isense-custom").show()
         $("#isense-cancel").click (e) ->
                 $("#isense-form").hide()
         $("#isense-submit").click (e) ->
                 $("#isense-form").hide()
-                for elt in $('input')
+                for elt in $('input:visible')
                         if !elt.value
                                 alert "Not everything filled out!"
                                 return
                 # Get key information
-                project = $("#isense-pid").val()
-                key = $("#isense-key").val()
-                title = $("#isense-dset").val()
-                name = $("#isense-name").val()
-                # Field matching
-                field_matching = [$("#t").val(), $("#x").val(), $("#y").val(), $("#vx").val(), $("#vy").val(), $("#ax").val(), $("#ay").val()]
+                project = $("#isense-pid").val(); project = if project == "" then "3304" else project
+                key = $("#isense-key").val(); key = if key == "" then "physics" else key
+		# Field matching
+                if project == "3304"
+                        title = $("#isense-dset-2").val(); title = if (title == "" or title == undefined) then $("#isense-dset").val() else title
+                        yourname = $("#isense-name-2").val(); yourname = if (yourname == "" or yourname == undefined) then $("#isense-name").val() else yourname
+                        field_matching = ["Time","X-Position","Y-Position","X-Velocity","Y-Velocity","X-Acceleration","Y-Acceleration"]
+                else
+                        title = $("#isense-dset").val()
+                        yourname = $("#isense-name").val()
+                        field_matching = [$("#t").val(), $("#x").val(), $("#y").val(), $("#vx").val(), $("#vy").val(), $("#ax").val(), $("#ay").val()]
                 urlProject = 'http://isenseproject.org/api/v1/projects/' + project
                 responseProject = $.ajax({ type: "GET", url: urlProject, async: false, dataType: "JSON"}).responseText
                 fields = JSON.parse(responseProject).fields
@@ -98,13 +111,13 @@ $(document).ready ->
                 data[fids[4]] = $('#data-table td:nth-child(5)').map(() -> return $(this).text()).get()
                 data[fids[5]] = $('#data-table td:nth-child(6)').map(() -> return $(this).text()).get()
                 data[fids[6]] = $('#data-table td:nth-child(7)').map(() -> return $(this).text()).get()
-                console.log data
                 # Perform the upload
                 apiUrl = 'https://isenseproject.org/api/v1/projects/' + project + '/jsonDataUpload'
                 upload = {
                         'title': title,
                         'contribution_key': key,
-                        'contributor_name': name,
+                        'contributor_name': yourname,
                         'data': data
                 }
-                $.post(apiUrl, upload, () -> alert "Sweet, it worked!").error(() -> alert "It failed... please check your details, they must be exact!")
+                console.log(upload);
+                $.post(apiUrl, upload, () -> iSENSESuccess(project)).error(() -> alert "It failed... please check your details, they must be exact!")

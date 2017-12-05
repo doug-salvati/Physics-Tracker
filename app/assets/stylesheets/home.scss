@@ -68,9 +68,12 @@ a:hover {
     top: 50%;
 }
 
+#export_btns {
+    margin-bottom: 20px;
+}
+
 .download_btn {
     cursor: pointer;
-    font-size: 400%;
     color: rgba(255,255,255,0.75);
     margin-left: 20px;
     margin-right: 20px;
@@ -205,4 +208,8 @@ table {
      img {
      	 width: 50%;
      }
+}
+
+#isense-custom {
+     display: none;
 }
