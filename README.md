@@ -21,6 +21,8 @@ where `sampling radius` is how big of an area to search when detecting the objec
 
 You can even upload to an [iSENSE](https://isenseproject.org/) project!  Checkout the results from various people using this process [here](https://isenseproject.org/projects/3304).  The site is available at [bit.ly/physics-track](bit.ly/physics-track).
 
+**December 4**: Some enhancements have been made over the past several weeks based on feedback recieved from teachers.  These include clearer instructions, bigger buttons, click-and-drag to measure, and upload to the communal iSENSE project easily.
+
 ## Installation
 If installing this app on your own server, please install the following dependencies. I have tested on Ubuntu 16.04 machines.
 ```
