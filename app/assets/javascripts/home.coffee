@@ -1,6 +1,9 @@
 # Coordinates of measurement
 x1 = y1 = x2 = y2 = -1
 
+iSENSESuccess = (pid) ->
+        window.open('https://isenseproject.org/projects/' + pid, '_blank');
+
 drawLine = (x1,y1,x2,y2) ->
         img = new Image()
         img.src = document.getElementById('measure-length-img').src
@@ -67,21 +70,30 @@ $(document).ready ->
 		$('#loading-screen').show()
 	$("#upload-to-isense").click (e) ->
                 $("#isense-form").show()
+        $("#isense-use-custom").click (e) ->
+                $("#isense-dset-2").val(""); $("#isense-name-2").val("") 
+                $("#isense-default").hide()
+                $("#isense-custom").show()
         $("#isense-cancel").click (e) ->
                 $("#isense-form").hide()
         $("#isense-submit").click (e) ->
                 $("#isense-form").hide()
-                for elt in $('input')
+                for elt in $('input:visible')
                         if !elt.value
                                 alert "Not everything filled out!"
                                 return
                 # Get key information
-                project = $("#isense-pid").val()
-                key = $("#isense-key").val()
-                title = $("#isense-dset").val()
-                yourname = $("#isense-name").val()
-                # Field matching
-                field_matching = [$("#t").val(), $("#x").val(), $("#y").val(), $("#vx").val(), $("#vy").val(), $("#ax").val(), $("#ay").val()]
+                project = $("#isense-pid").val(); project = if project == "" then "3304" else project
+                key = $("#isense-key").val(); key = if key == "" then "physics" else key
+		# Field matching
+                if project == "3304"
+                        title = $("#isense-dset-2").val(); title = if (title == "" or title == undefined) then $("#isense-dset").val() else title
+                        yourname = $("#isense-name-2").val(); yourname = if (yourname == "" or yourname == undefined) then $("#isense-name").val() else yourname
+                        field_matching = ["Time","X-Position","Y-Position","X-Velocity","Y-Velocity","X-Acceleration","Y-Acceleration"]
+                else
+                        title = $("#isense-dset").val()
+                        yourname = $("#isense-name").val()
+                        field_matching = [$("#t").val(), $("#x").val(), $("#y").val(), $("#vx").val(), $("#vy").val(), $("#ax").val(), $("#ay").val()]
                 urlProject = 'http://isenseproject.org/api/v1/projects/' + project
                 responseProject = $.ajax({ type: "GET", url: urlProject, async: false, dataType: "JSON"}).responseText
                 fields = JSON.parse(responseProject).fields
@@ -99,7 +111,6 @@ $(document).ready ->
                 data[fids[4]] = $('#data-table td:nth-child(5)').map(() -> return $(this).text()).get()
                 data[fids[5]] = $('#data-table td:nth-child(6)').map(() -> return $(this).text()).get()
                 data[fids[6]] = $('#data-table td:nth-child(7)').map(() -> return $(this).text()).get()
-                console.log data
                 # Perform the upload
                 apiUrl = 'https://isenseproject.org/api/v1/projects/' + project + '/jsonDataUpload'
                 upload = {
@@ -108,4 +119,5 @@ $(document).ready ->
                         'contributor_name': yourname,
                         'data': data
                 }
-                $.post(apiUrl, upload, () -> alert "Sweet, it worked!").error(() -> alert "It failed... please check your details, they must be exact!")
+                console.log(upload);
+                $.post(apiUrl, upload, () -> iSENSESuccess(project)).error(() -> alert "It failed... please check your details, they must be exact!")
