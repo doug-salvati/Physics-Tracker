@@ -50,10 +50,16 @@ def analyze
   end
 
   # Run Python script!
-  @po, @pe, @ps = Open3.capture3("python #{script} #{inpath} #{sampling_radius} #{tolerance} #{length} #{x} #{y} #{outpath} #{data_path}")
-  if @ps.exitstatus != 0
-    redirect_to(root_path, {:flash => {:error => "Failed during tracking with the following issues:<br/>" + @po}})
-    return
+  loop do
+    @po, @pe, @ps = Open3.capture3("python #{script} #{inpath} #{sampling_radius} #{tolerance} #{length} #{x} #{y} #{outpath} #{data_path}")
+    if @ps.exitstatus != 0
+      tolerance += 5
+      if tolerance > 100
+        redirect_to(root_path, {:flash => {:error => "Failed during tracking with the following issues:<br/>" + @po}})
+        return
+      end
+    end
+    break if @ps.exitstatus == 0
   end
 
   # Convert the file to webm
