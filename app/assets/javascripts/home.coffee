@@ -1,5 +1,5 @@
 # Coordinates of measurement
-x1 = y1 = x2 = y2 = -1
+x1 = y1 = x2 = y2 = lastx = lasty = -1
 
 iSENSESuccess = (pid) ->
         window.open('https://isenseproject.org/projects/' + pid, '_blank');
@@ -32,22 +32,26 @@ $(document).ready ->
                 $("#click-object").hide()
                 $("#measure-length").show()
                 document.body.scrollTop = document.documentElement.scrollTop = 0
-	$("#measure-length-canvas").mousemove (e) ->
-                 if (x1 isnt -1) and (x2 is -1)
-                         drawLine(x1,y1,e.pageX - $(this).offset().left, e.pageY - $(this).offset().top)
-	$("#measure-length-canvas").mousedown (e) ->
-                #  Selecting 1st point
-                click_x = e.pageX
-                click_y = e.pageY
-                x1 = Math.round(click_x - $(this).offset().left)
-                y1 = Math.round(click_y - $(this).offset().top)
+        $("#measure-length-canvas").tapmove (e) ->
+                click_x = if (e.originalEvent.type is "mousemove") then e.pageX else e.originalEvent.touches[0].pageX
+                click_y = if (e.originalEvent.type is "mousemove") then e.pageY else e.originalEvent.touches[0].pageY
+                if (x1 isnt -1) and (x2 is -1)
+                        drawLine(x1,y1,click_x - $(this).offset().left, click_y - $(this).offset().top); lastx = click_x; lasty = click_y
+        $("#measure-length-canvas").tapstart (e) ->
+                #  Selecting 1st point - tap or mouse?
+                click_x = if (e.originalEvent.type is "mousedown") then e.pageX else e.originalEvent.touches[0].pageX
+                click_y = if (e.originalEvent.type is "mousedown") then e.pageY else e.originalEvent.touches[0].pageY
+                x1 = Math.round(click_x - $(this).offset().left);
+                y1 = Math.round(click_y - $(this).offset().top);
                 $("#measure-length-next").hide();
 	if $("#measure-length-img").length
 	        drawLine(x1,y1,x2,y2)
-	$("#measure-length-canvas").mouseup (e) ->
+	$("#measure-length-canvas").tapend (e) ->
                 # Selecting 2nd point (need to calc dist)
-		x2 = Math.round(e.pageX - $(this).offset().left)
-		y2 = Math.round(e.pageY - $(this).offset().top)
+		click_x = lastx
+		click_y = lasty
+		x2 = Math.round(click_x - $(this).offset().left)
+		y2 = Math.round(click_y - $(this).offset().top)
 		if (x1 == x2) and (y1 == y2)
 		   drawLine(x1,y1,x2,y2)
 		   x1 = x2 = y1 = y2 = -1
