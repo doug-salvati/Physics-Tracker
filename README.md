@@ -19,7 +19,7 @@ motion.
 Project URL: [bit.ly/physics-track](http://bit.ly/physics-track)
 
 **I'm working on some other stuff and wanted to save money on AWS, so Physics Tracker is currently shut down.**
-Feel free to contact me from the emali on my Github page if you're interested in using Physics Tracker.
+Feel free to contact me from the email on my Github page if you're interested in using Physics Tracker.
 
 Check out some results on [iSENSE](https://isenseproject.org/projects/3304)
 
