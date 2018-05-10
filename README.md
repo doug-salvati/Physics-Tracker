@@ -8,11 +8,9 @@ frame. From there, computer vision is used to track
 this object's motion throughout the video. After a
 short wait, the user can view the position, velocity,
 and acceleration of the object with respect to time,
-automatically calculated for them and placed in a ta-
-ble. There is also the option to see video playback
+automatically calculated for them and placed in a table. There is also the option to see video playback
 with the computer's calculated coordinates marked
-on each frame. As a final step, the data can be up-
-loaded to iSENSE, a web page used for storing and
+on each frame. As a final step, the data can be uploaded to iSENSE, a web page used for storing and
 visualizing data, enabling effortless plotting of the
 motion.
 
